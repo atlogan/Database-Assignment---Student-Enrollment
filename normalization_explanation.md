@@ -1,0 +1,11 @@
+# Normalization Process: Student Enrollment System
+
+I started the normalization process with a single table (`student_enrollment`) that contained all student, course, instructor, and enrollment information. This unnormalized design suffered from significant data redundancy and potential anomalies. For example, student information was repeated for each course they took, and course details were duplicated for each enrolled student.
+
+To achieve First Normal Form (1NF), I separated the data into distinct tables based on entity types: `students`, `instructors`, `courses`, `classes`, and `enrollments`. Each table was given a primary key, and all attributes were made atomic (containing single values). This eliminated repeating groups and ensured each column contained only one piece of information.
+
+For Second Normal Form (2NF), I ensured that all non-key attributes were fully dependent on the primary key. Since I used single-column primary keys (like `student_id`, `course_id`, etc.), I didn't need to address partial dependencies. However, I needed to ensure that attributes like student name and major were properly associated with the student entity, not mixed with course or enrollment information.
+
+Finally, to achieve Third Normal Form (3NF), I eliminated transitive dependencies by ensuring that non-key attributes depended only on the primary key. For example, in the `classes` table, I used foreign keys to reference `courses` and `instructors` instead of duplicating their information. The `enrollments` table serves as a junction table to handle the many-to-many relationship between students and classes, with its own primary key (`enrollment_id`) and appropriate foreign key constraints.
+
+The normalized design now provides better data integrity through foreign key constraints, eliminates redundancy, and makes the database more maintainable and flexible for querying. Each entity's information is stored exactly once, and relationships between entities are clearly defined through foreign keys.
